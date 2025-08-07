@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Minimal Fetch Test</title>
+    <style>
+        body { font-family: sans-serif; padding: 20px; }
+        button { padding: 10px 15px; font-size: 16px; margin-top: 10px; cursor: pointer; }
+        #message { margin-top: 20px; padding: 10px; border: 1px solid #ccc; min-height: 50px; }
+        .error { color: red; border-color: red; }
+    </style>
+</head>
+<body>
+    <h1>Minimal Fetch Test for /api/speak</h1>
+    <p>This page tests the fetch call to /api/speak in isolation.</p>
+
+    <label for="textToSpeakInput">Text to Speak:</label>
+    <input type="text" id="textToSpeakInput" value="HELLO TEST" style="width: 300px; padding: 8px;">
+    <br>
+    <button id="testSpeakButton" type="button">Test Speak API Call</button>
+
+    <div id="message">Status messages will appear here.</div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const BACKEND_URL = 'http://localhost:5000'; // Ensure this is correct
+            const testSpeakButton = document.getElementById('testSpeakButton');
+            const messageDiv = document.getElementById('message');
+            const textInput = document.getElementById('textToSpeakInput');
+
+            testSpeakButton.addEventListener('click', async (event) => {
+                console.log('Test Speak button clicked. Timestamp:', Date.now());
+                event.preventDefault(); // Just in case, though type="button" should suffice
+                event.stopPropagation(); // Just in case
+
+                messageDiv.textContent = 'Button clicked. Preventing default actions.';
+                messageDiv.classList.remove('error');
+
+                const textToSpeak = textInput.value.trim();
+                if (!textToSpeak) {
+                    messageDiv.textContent = 'Please enter text to speak.';
+                    messageDiv.classList.add('error');
+                    return;
+                }
+
+                console.log('Text to speak for minimal test:', textToSpeak);
+                messageDiv.textContent = `Requesting audio from backend for: "${textToSpeak}"...`;
+
+                try {
+                    const response = await fetch(`${BACKEND_URL}/api/speak`, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({ text: textToSpeak })
+                    });
+
+                    console.log('Minimal test: Fetch to /api/speak completed. Status:', response.status, 'Timestamp:', Date.now());
+                    messageDiv.textContent = `Fetch completed. Status: ${response.status}. Response OK: ${response.ok}.`;
+
+                    if (!response.ok) {
+                        console.error('Minimal test: Backend API error. Status:', response.status);
+                        messageDiv.textContent += ` Backend returned an error. Status Text: ${response.statusText}`;
+                        messageDiv.classList.add('error');
+                        // Attempt to get error message if JSON
+                        try {
+                            const errData = await response.json();
+                            console.error('Minimal test: Error data from backend:', errData);
+                            messageDiv.textContent += ` Error details: ${errData.error || 'N/A'}`;
+                        } catch (e) {
+                            console.warn('Minimal test: Could not parse error response as JSON.');
+                        }
+                    } else {
+                        console.log('Minimal test: Backend /api/speak call was successful.');
+                        messageDiv.textContent += ' Backend call successful. No further processing for this test.';
+                        // We will NOT try to parse response.json() here for this test
+                    }
+                    console.log('Minimal test: End of try block. Timestamp:', Date.now());
+
+                } catch (error) {
+                    console.error('Minimal test: Error during fetch operation:', error, 'Timestamp:', Date.now());
+                    messageDiv.textContent = `Network or fetch error: ${error.message}`;
+                    messageDiv.classList.add('error');
+                }
+                console.log('Minimal test: End of click handler. Timestamp:', Date.now());
+            });
+        });
+    </script>
+</body>
+</html>

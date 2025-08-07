@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Real-Time ASL Translator - ASL Translator</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <a href="index.html" class="logo">
+                <i class="fa-solid fa-globe"></i> ASL Translator
+            </a>
+            <nav>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="translator.html" class="active">Translator</a></li>
+                    <li><a href="about.html">About</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <section class="translator-page-section">
+            <div class="container">
+                <h1>Real-Time ASL Translator</h1>
+                <p>Use your camera to translate sign language to text in real-time. Allow camera access when prompted.</p>
+
+                <div class="translator-interface">
+                    <div class="video-area">
+                        <div class="video-placeholder">
+                             <p>Camera feed will appear here once started.</p>
+                            <!-- Video element will be injected here by JS -->
+                        </div>
+                        <button class="btn btn-primary" id="startCameraButton" style="margin-bottom: 20px;"><i class="fa-solid fa-camera"></i> Start Camera</button>
+                        <div class="video-controls">
+                            <!-- Original Controls (can be made functional or removed if not needed for this backend) -->
+                            <div class="control-buttons">
+                                <button aria-label="Record" title="Not implemented"><i class="fa-solid fa-circle-dot"></i></button>
+                                <button aria-label="Play/Pause" title="Not implemented"><i class="fa-solid fa-play"></i></button>
+                                <button aria-label="Fullscreen" title="Not implemented"><i class="fa-solid fa-expand"></i></button>
+                            </div>
+                            <button class="btn btn-primary" id="processSignButton">Process Current Sign</button>
+                        </div>
+                        <!-- Action buttons will be injected here by JS -->
+                        <div id="actionButtonsContainer" style="margin-top: 15px; display: flex; flex-wrap: wrap; gap: 10px; justify-content: center;">
+                            <!-- Buttons like Add Letter, Add Space, Clear, Speak will be added here -->
+                        </div>
+                         <p id="currentWordDisplay" style="margin-top: 20px; font-size: 1.3em; font-weight: bold; text-align: center;">Word: </p>
+                    </div>
+
+                    <div class="translation-results-area">
+                        <h3>Translation & Detection <i class="fa-solid fa-circle-info" title="Shows the latest detected character and confidence."></i></h3>
+                        <p id="translationOutput" style="font-size: 1.1em;">No detections yet. Start camera and process a sign.</p>
+                        <!-- Future: list of translations -->
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-about">
+                     <a href="index.html" class="logo">
+                        <i class="fa-solid fa-globe"></i> ASL Translator
+                    </a>
+                    <p>Bridging communication gaps with real-time sign language translation powered by advanced AI technology.</p>
+                    <div class="social-icons">
+                        <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                        <a href="#" aria-label="GitHub"><i class="fab fa-github"></i></a>
+                        <a href="#" aria-label="Email"><i class="fas fa-envelope"></i></a>
+                    </div>
+                </div>
+                <div class="footer-links">
+                    <h4>Navigation</h4>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="translator.html">Translator</a></li>
+                        <li><a href="about.html">About</a></li>
+                    </ul>
+                </div>
+                <div class="footer-links">
+                    <h4>Resources</h4>
+                    <ul>
+                        <li><a href="#">Documentation</a></li>
+                        <li><a href="#">API</a></li>
+                        <li><a href="#">Privacy Policy</a></li>
+                        <li><a href="#">Terms of Service</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>© 2025 ASL Translator. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+    <script src="script.js"></script>
+</body>
+</html>
